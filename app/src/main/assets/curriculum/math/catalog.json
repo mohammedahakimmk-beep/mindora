@@ -1,0 +1,749 @@
+{
+  "subject": {
+    "id": "math",
+    "name": "Mathematics",
+    "description": "Forge your numerical constellation across arithmetic, fractions, algebra, and geometry.",
+    "icon": "🔢"
+  },
+  "topics": [
+    {
+      "id": "numbers_basics",
+      "subjectId": "math",
+      "title": "Number Constellations",
+      "description": "Understand whole numbers, place value, and number lines.",
+      "difficulty": "easy",
+      "order": 1,
+      "xpReward": 50,
+      "energyCost": 2,
+      "prerequisites": [],
+      "constellationX": 0.15,
+      "constellationY": 0.7,
+      "lessonIds": ["numbers_lesson_1"]
+    },
+    {
+      "id": "addition_subtraction",
+      "subjectId": "math",
+      "title": "Addition & Subtraction Forge",
+      "description": "Master adding and subtracting whole numbers with regrouping.",
+      "difficulty": "easy",
+      "order": 2,
+      "xpReward": 60,
+      "energyCost": 2,
+      "prerequisites": ["numbers_basics"],
+      "constellationX": 0.3,
+      "constellationY": 0.55,
+      "lessonIds": ["add_sub_lesson_1"]
+    },
+    {
+      "id": "multiplication_division",
+      "subjectId": "math",
+      "title": "Multiplication & Division Stars",
+      "description": "Learn times tables, long multiplication, and division.",
+      "difficulty": "medium",
+      "order": 3,
+      "xpReward": 70,
+      "energyCost": 3,
+      "prerequisites": ["addition_subtraction"],
+      "constellationX": 0.45,
+      "constellationY": 0.4,
+      "lessonIds": ["mult_div_lesson_1"]
+    },
+    {
+      "id": "fractions",
+      "subjectId": "math",
+      "title": "Fraction Nebulae",
+      "description": "Work with fractions, equivalents, and operations.",
+      "difficulty": "medium",
+      "order": 4,
+      "xpReward": 80,
+      "energyCost": 3,
+      "prerequisites": ["multiplication_division"],
+      "constellationX": 0.6,
+      "constellationY": 0.3,
+      "lessonIds": ["fractions_lesson_1"]
+    },
+    {
+      "id": "decimals_percent",
+      "subjectId": "math",
+      "title": "Decimals & Percentages",
+      "description": "Convert between fractions, decimals, and percentages.",
+      "difficulty": "medium",
+      "order": 5,
+      "xpReward": 80,
+      "energyCost": 3,
+      "prerequisites": ["fractions"],
+      "constellationX": 0.72,
+      "constellationY": 0.45,
+      "lessonIds": ["decimals_lesson_1"]
+    },
+    {
+      "id": "algebra_basics",
+      "subjectId": "math",
+      "title": "Algebraic Forge",
+      "description": "Introduce variables, expressions, and simple equations.",
+      "difficulty": "hard",
+      "order": 6,
+      "xpReward": 100,
+      "energyCost": 4,
+      "prerequisites": ["decimals_percent"],
+      "constellationX": 0.82,
+      "constellationY": 0.6,
+      "lessonIds": ["algebra_lesson_1"]
+    },
+    {
+      "id": "geometry_basics",
+      "subjectId": "math",
+      "title": "Geometry Constellation",
+      "description": "Explore shapes, angles, perimeter, and area.",
+      "difficulty": "hard",
+      "order": 7,
+      "xpReward": 100,
+      "energyCost": 4,
+      "prerequisites": ["algebra_basics"],
+      "constellationX": 0.9,
+      "constellationY": 0.75,
+      "lessonIds": ["geometry_lesson_1"]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "numbers_lesson_1",
+      "topicId": "numbers_basics",
+      "title": "Understanding Numbers",
+      "description": "Learn place value and how numbers are structured.",
+      "videoUrl": "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      "videoTitle": "Place Value Explained",
+      "stages": [
+        {
+          "id": "nb_s1",
+          "type": "CONTENT",
+          "title": "What Are Numbers?",
+          "content": "Numbers help us count, measure, and compare. Each digit in a number has a place value based on its position.\n\nIn 3,482:\n• 3 is in the thousands place (3,000)\n• 4 is in the hundreds place (400)\n• 8 is in the tens place (80)\n• 2 is in the ones place (2)\n\nSo 3,482 = 3,000 + 400 + 80 + 2"
+        },
+        {
+          "id": "nb_s2",
+          "type": "VIDEO",
+          "title": "Video: Place Value",
+          "content": "Watch this lesson on how place value works.",
+          "videoUrl": "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+        },
+        {
+          "id": "nb_s3",
+          "type": "EXAMPLE",
+          "title": "Worked Example",
+          "content": "Let's break down the number 5,607.",
+          "examples": [
+            {
+              "problem": "What is the value of each digit in 5,607?",
+              "solution": "5,607 = 5,000 + 600 + 0 + 7",
+              "steps": [
+                "5 is in the thousands place → 5,000",
+                "6 is in the hundreds place → 600",
+                "0 is in the tens place → 0",
+                "7 is in the ones place → 7"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "nb_s4",
+          "type": "PRACTICE",
+          "title": "Practice",
+          "questions": [
+            {
+              "id": "nb_q1",
+              "type": "NUMERIC",
+              "prompt": "What is the value of the digit 7 in 2,739?",
+              "correctAnswer": "700",
+              "explanation": "The 7 is in the hundreds place, so its value is 700.",
+              "hint": "Look at which place the 7 occupies — hundreds, tens, or ones?",
+              "difficulty": 1
+            },
+            {
+              "id": "nb_q2",
+              "type": "MULTIPLE_CHOICE",
+              "prompt": "Which number has 4 in the tens place?",
+              "options": ["1,456", "4,561", "1,465", "1,546"],
+              "correctAnswer": "1,465",
+              "explanation": "In 1,465, the 4 is in the tens place (40).",
+              "hint": "The tens digit is the second digit from the right.",
+              "difficulty": 1
+            }
+          ]
+        },
+        {
+          "id": "nb_s5",
+          "type": "QUIZ",
+          "title": "Quick Check",
+          "questions": [
+            {
+              "id": "nb_q3",
+              "type": "NUMERIC",
+              "prompt": "Write 3 thousands, 2 hundreds, 5 tens, and 1 one as a number.",
+              "correctAnswer": "3251",
+              "explanation": "3,000 + 200 + 50 + 1 = 3,251",
+              "hint": "Add each place value together.",
+              "difficulty": 2
+            },
+            {
+              "id": "nb_q4",
+              "type": "TRUE_FALSE",
+              "prompt": "In the number 8,904, the 0 is in the hundreds place.",
+              "options": ["True", "False"],
+              "correctAnswer": "false",
+              "explanation": "The 0 is in the tens place. The 9 is in the hundreds place.",
+              "hint": "Count places from right to left: ones, tens, hundreds...",
+              "difficulty": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "add_sub_lesson_1",
+      "topicId": "addition_subtraction",
+      "title": "Adding & Subtracting",
+      "description": "Build fluency with addition and subtraction.",
+      "videoUrl": "https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+      "videoTitle": "Addition Strategies",
+      "stages": [
+        {
+          "id": "as_s1",
+          "type": "CONTENT",
+          "title": "Addition & Subtraction",
+          "content": "Addition combines quantities (+). Subtraction finds the difference (−).\n\nKey strategies:\n• Count on for small numbers\n• Use number bonds to make 10\n• Regroup (carry/borrow) for larger numbers\n\nExample: 47 + 28\n• 7 + 8 = 15 (write 5, carry 1)\n• 4 + 2 + 1 = 7\n• Answer: 75"
+        },
+        {
+          "id": "as_s2",
+          "type": "VIDEO",
+          "title": "Video: Addition with Regrouping",
+          "content": "Learn the regrouping technique.",
+          "videoUrl": "https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+        },
+        {
+          "id": "as_s3",
+          "type": "EXAMPLE",
+          "title": "Worked Example",
+          "examples": [
+            {
+              "problem": "Calculate 83 − 47",
+              "solution": "83 − 47 = 36",
+              "steps": [
+                "Can't subtract 7 from 3, so borrow from tens",
+                "13 − 7 = 6",
+                "7 − 4 = 3 (after borrowing, 7 tens remain)",
+                "Answer: 36"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "as_s4",
+          "type": "PRACTICE",
+          "title": "Practice",
+          "questions": [
+            {
+              "id": "as_q1",
+              "type": "NUMERIC",
+              "prompt": "What is 56 + 37?",
+              "correctAnswer": "93",
+              "explanation": "56 + 37 = 93. Add ones: 6+7=13, carry 1. Add tens: 5+3+1=9.",
+              "hint": "Add the ones first, then the tens.",
+              "difficulty": 1
+            },
+            {
+              "id": "as_q2",
+              "type": "NUMERIC",
+              "prompt": "What is 92 − 45?",
+              "correctAnswer": "47",
+              "explanation": "92 − 45 = 47. Borrow from tens to subtract 5 from 2.",
+              "hint": "You may need to regroup from the tens place.",
+              "difficulty": 2
+            }
+          ]
+        },
+        {
+          "id": "as_s5",
+          "type": "QUIZ",
+          "title": "Quick Check",
+          "questions": [
+            {
+              "id": "as_q3",
+              "type": "NUMERIC",
+              "prompt": "A forge has 128 stars. 53 are forged. How many remain?",
+              "correctAnswer": "75",
+              "explanation": "128 − 53 = 75 stars remain.",
+              "hint": "This is a subtraction word problem.",
+              "difficulty": 2
+            },
+            {
+              "id": "as_q4",
+              "type": "MULTIPLE_CHOICE",
+              "prompt": "Which expression equals 100?",
+              "options": ["45 + 55", "60 + 30", "70 + 20", "35 + 55"],
+              "correctAnswer": "45 + 55",
+              "explanation": "45 + 55 = 100.",
+              "hint": "Add each pair and find which sums to 100.",
+              "difficulty": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mult_div_lesson_1",
+      "topicId": "multiplication_division",
+      "title": "Multiply & Divide",
+      "description": "Master multiplication and division operations.",
+      "videoUrl": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      "videoTitle": "Multiplication Fundamentals",
+      "stages": [
+        {
+          "id": "md_s1",
+          "type": "CONTENT",
+          "title": "Multiplication & Division",
+          "content": "Multiplication is repeated addition: 4 × 3 = 3 + 3 + 3 + 3 = 12\n\nDivision splits into equal groups: 12 ÷ 4 = 3\n\nKey facts:\n• Any number × 0 = 0\n• Any number × 1 = itself\n• Division by 0 is undefined\n\nLong multiplication: 23 × 4 = (20 × 4) + (3 × 4) = 80 + 12 = 92"
+        },
+        {
+          "id": "md_s2",
+          "type": "VIDEO",
+          "title": "Video: Times Tables",
+          "content": "Memorize and apply multiplication facts.",
+          "videoUrl": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+        },
+        {
+          "id": "md_s3",
+          "type": "EXAMPLE",
+          "title": "Worked Example",
+          "examples": [
+            {
+              "problem": "Calculate 48 ÷ 6",
+              "solution": "48 ÷ 6 = 8",
+              "steps": [
+                "Think: what times 6 equals 48?",
+                "6 × 8 = 48",
+                "Answer: 8"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "md_s4",
+          "type": "PRACTICE",
+          "title": "Practice",
+          "questions": [
+            {
+              "id": "md_q1",
+              "type": "NUMERIC",
+              "prompt": "What is 7 × 8?",
+              "correctAnswer": "56",
+              "explanation": "7 × 8 = 56. This is a key times table fact.",
+              "hint": "7 × 8 = 7 × (10 − 2) = 70 − 14 = 56",
+              "difficulty": 1
+            },
+            {
+              "id": "md_q2",
+              "type": "NUMERIC",
+              "prompt": "What is 72 ÷ 9?",
+              "correctAnswer": "8",
+              "explanation": "72 ÷ 9 = 8 because 9 × 8 = 72.",
+              "hint": "Use your 9 times table.",
+              "difficulty": 1
+            }
+          ]
+        },
+        {
+          "id": "md_s5",
+          "type": "QUIZ",
+          "title": "Quick Check",
+          "questions": [
+            {
+              "id": "md_q3",
+              "type": "NUMERIC",
+              "prompt": "What is 15 × 6?",
+              "correctAnswer": "90",
+              "explanation": "15 × 6 = (10 × 6) + (5 × 6) = 60 + 30 = 90.",
+              "hint": "Break 15 into 10 + 5.",
+              "difficulty": 2
+            },
+            {
+              "id": "md_q4",
+              "type": "MULTIPLE_CHOICE",
+              "prompt": "Which is the same as 56 ÷ 8?",
+              "options": ["7", "6", "8", "9"],
+              "correctAnswer": "7",
+              "explanation": "56 ÷ 8 = 7.",
+              "hint": "8 × ? = 56",
+              "difficulty": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fractions_lesson_1",
+      "topicId": "fractions",
+      "title": "Working with Fractions",
+      "description": "Understand and operate on fractions.",
+      "videoUrl": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+      "videoTitle": "Fraction Fundamentals",
+      "stages": [
+        {
+          "id": "fr_s1",
+          "type": "CONTENT",
+          "title": "Fraction Basics",
+          "content": "A fraction represents parts of a whole: numerator/denominator\n\n• 3/4 means 3 parts out of 4 equal parts\n• Equivalent fractions: 1/2 = 2/4 = 3/6\n• To add fractions: find common denominator\n\nExample: 1/4 + 2/4 = 3/4\nExample: 1/2 + 1/3 = 3/6 + 2/6 = 5/6"
+        },
+        {
+          "id": "fr_s2",
+          "type": "VIDEO",
+          "title": "Video: Adding Fractions",
+          "content": "Learn to add fractions with different denominators.",
+          "videoUrl": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+        },
+        {
+          "id": "fr_s3",
+          "type": "EXAMPLE",
+          "title": "Worked Example",
+          "examples": [
+            {
+              "problem": "Simplify 6/8",
+              "solution": "6/8 = 3/4",
+              "steps": [
+                "Find the GCD of 6 and 8, which is 2",
+                "Divide both numerator and denominator by 2",
+                "6÷2 = 3, 8÷2 = 4",
+                "Answer: 3/4"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "fr_s4",
+          "type": "PRACTICE",
+          "title": "Practice",
+          "questions": [
+            {
+              "id": "fr_q1",
+              "type": "MULTIPLE_CHOICE",
+              "prompt": "Which fraction is equivalent to 1/2?",
+              "options": ["2/4", "1/3", "3/5", "2/3"],
+              "correctAnswer": "2/4",
+              "explanation": "2/4 = 1/2 when simplified (divide both by 2).",
+              "hint": "Multiply or divide top and bottom by the same number.",
+              "difficulty": 1
+            },
+            {
+              "id": "fr_q2",
+              "type": "MULTIPLE_CHOICE",
+              "prompt": "What is 1/3 + 1/3?",
+              "options": ["2/3", "2/6", "1/6", "2/9"],
+              "correctAnswer": "2/3",
+              "explanation": "When denominators are the same, add numerators: 1+1=2, keep denominator 3.",
+              "hint": "Same denominator? Just add the tops.",
+              "difficulty": 1
+            }
+          ]
+        },
+        {
+          "id": "fr_s5",
+          "type": "QUIZ",
+          "title": "Quick Check",
+          "questions": [
+            {
+              "id": "fr_q3",
+              "type": "MULTIPLE_CHOICE",
+              "prompt": "What is 2/5 + 1/5?",
+              "options": ["3/5", "3/10", "1/5", "2/5"],
+              "correctAnswer": "3/5",
+              "explanation": "2/5 + 1/5 = 3/5.",
+              "hint": "Add numerators when denominators match.",
+              "difficulty": 1
+            },
+            {
+              "id": "fr_q4",
+              "type": "TRUE_FALSE",
+              "prompt": "3/4 is greater than 2/3.",
+              "options": ["True", "False"],
+              "correctAnswer": "true",
+              "explanation": "3/4 = 0.75 and 2/3 ≈ 0.67, so 3/4 is greater.",
+              "hint": "Convert to decimals or find a common denominator.",
+              "difficulty": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "decimals_lesson_1",
+      "topicId": "decimals_percent",
+      "title": "Decimals & Percentages",
+      "description": "Connect fractions, decimals, and percents.",
+      "videoUrl": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+      "videoTitle": "Decimals Explained",
+      "stages": [
+        {
+          "id": "dc_s1",
+          "type": "CONTENT",
+          "title": "Decimals & Percents",
+          "content": "Decimals extend place value past the ones place.\n\n• 0.5 = 5/10 = 1/2\n• 0.25 = 25/100 = 1/4\n\nPercent means 'per hundred':\n• 50% = 50/100 = 0.5 = 1/2\n• 25% = 0.25\n• 100% = 1 whole"
+        },
+        {
+          "id": "dc_s2",
+          "type": "VIDEO",
+          "title": "Video: Percentages",
+          "content": "Understand what percentages mean.",
+          "videoUrl": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+        },
+        {
+          "id": "dc_s3",
+          "type": "EXAMPLE",
+          "title": "Worked Example",
+          "examples": [
+            {
+              "problem": "Convert 3/4 to a decimal and percentage.",
+              "solution": "3/4 = 0.75 = 75%",
+              "steps": [
+                "Divide 3 ÷ 4 = 0.75",
+                "Multiply by 100: 0.75 × 100 = 75%",
+                "Answer: 0.75 or 75%"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dc_s4",
+          "type": "PRACTICE",
+          "title": "Practice",
+          "questions": [
+            {
+              "id": "dc_q1",
+              "type": "MULTIPLE_CHOICE",
+              "prompt": "What is 0.5 as a fraction?",
+              "options": ["1/2", "1/5", "5/10", "1/4"],
+              "correctAnswer": "1/2",
+              "explanation": "0.5 = 5/10 = 1/2.",
+              "hint": "0.5 means 5 tenths.",
+              "difficulty": 1
+            },
+            {
+              "id": "dc_q2",
+              "type": "NUMERIC",
+              "prompt": "What is 25% of 80?",
+              "correctAnswer": "20",
+              "explanation": "25% of 80 = 0.25 × 80 = 20.",
+              "hint": "Convert 25% to 0.25, then multiply.",
+              "difficulty": 2
+            }
+          ]
+        },
+        {
+          "id": "dc_s5",
+          "type": "QUIZ",
+          "title": "Quick Check",
+          "questions": [
+            {
+              "id": "dc_q3",
+              "type": "MULTIPLE_CHOICE",
+              "prompt": "Which equals 0.75?",
+              "options": ["75%", "7.5%", "0.75%", "750%"],
+              "correctAnswer": "75%",
+              "explanation": "0.75 × 100 = 75%.",
+              "hint": "Multiply the decimal by 100 to get percent.",
+              "difficulty": 1
+            },
+            {
+              "id": "dc_q4",
+              "type": "NUMERIC",
+              "prompt": "Write 1/5 as a decimal.",
+              "correctAnswer": "0.2",
+              "explanation": "1 ÷ 5 = 0.2",
+              "hint": "Divide numerator by denominator.",
+              "difficulty": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "algebra_lesson_1",
+      "topicId": "algebra_basics",
+      "title": "Introduction to Algebra",
+      "description": "Variables, expressions, and solving equations.",
+      "videoUrl": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+      "videoTitle": "Algebra Basics",
+      "stages": [
+        {
+          "id": "al_s1",
+          "type": "CONTENT",
+          "title": "Algebra Foundations",
+          "content": "Algebra uses letters (variables) to represent unknown values.\n\n• Expression: 2x + 3 (no equals sign)\n• Equation: 2x + 3 = 11 (has equals sign)\n\nTo solve: do the same operation on both sides.\n\n2x + 3 = 11\n2x = 8\nx = 4"
+        },
+        {
+          "id": "al_s2",
+          "type": "VIDEO",
+          "title": "Video: Solving Equations",
+          "content": "Step-by-step equation solving.",
+          "videoUrl": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
+        },
+        {
+          "id": "al_s3",
+          "type": "EXAMPLE",
+          "title": "Worked Example",
+          "examples": [
+            {
+              "problem": "Solve 3x − 5 = 16",
+              "solution": "x = 7",
+              "steps": [
+                "Add 5 to both sides: 3x = 21",
+                "Divide both sides by 3: x = 7",
+                "Check: 3(7) − 5 = 21 − 5 = 16 ✓"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "al_s4",
+          "type": "PRACTICE",
+          "title": "Practice",
+          "questions": [
+            {
+              "id": "al_q1",
+              "type": "NUMERIC",
+              "prompt": "Solve for x: x + 7 = 15",
+              "correctAnswer": "8",
+              "explanation": "x = 15 − 7 = 8",
+              "hint": "Subtract 7 from both sides.",
+              "difficulty": 1
+            },
+            {
+              "id": "al_q2",
+              "type": "NUMERIC",
+              "prompt": "Solve for x: 2x = 18",
+              "correctAnswer": "9",
+              "explanation": "x = 18 ÷ 2 = 9",
+              "hint": "Divide both sides by 2.",
+              "difficulty": 1
+            }
+          ]
+        },
+        {
+          "id": "al_s5",
+          "type": "QUIZ",
+          "title": "Quick Check",
+          "questions": [
+            {
+              "id": "al_q3",
+              "type": "NUMERIC",
+              "prompt": "Solve for x: 4x + 2 = 22",
+              "correctAnswer": "5",
+              "explanation": "4x = 20, so x = 5.",
+              "hint": "Subtract 2 first, then divide by 4.",
+              "difficulty": 2
+            },
+            {
+              "id": "al_q4",
+              "type": "MULTIPLE_CHOICE",
+              "prompt": "What is 3x + 2x simplified?",
+              "options": ["5x", "6x", "5x²", "3x²"],
+              "correctAnswer": "5x",
+              "explanation": "3x + 2x = 5x (combine like terms).",
+              "hint": "Add the coefficients of x.",
+              "difficulty": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "geometry_lesson_1",
+      "topicId": "geometry_basics",
+      "title": "Shapes & Measurement",
+      "description": "Perimeter, area, and basic geometry.",
+      "videoUrl": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+      "videoTitle": "Geometry Basics",
+      "stages": [
+        {
+          "id": "geo_s1",
+          "type": "CONTENT",
+          "title": "Geometry Essentials",
+          "content": "Geometry studies shapes, sizes, and positions.\n\nKey formulas:\n• Rectangle perimeter = 2(l + w)\n• Rectangle area = l × w\n• Triangle area = ½ × base × height\n• Circle area = πr² (π ≈ 3.14)\n\nAngles in a triangle sum to 180°."
+        },
+        {
+          "id": "geo_s2",
+          "type": "VIDEO",
+          "title": "Video: Area & Perimeter",
+          "content": "Calculate area and perimeter of shapes.",
+          "videoUrl": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
+        },
+        {
+          "id": "geo_s3",
+          "type": "EXAMPLE",
+          "title": "Worked Example",
+          "examples": [
+            {
+              "problem": "Find the area of a rectangle with length 8 cm and width 5 cm.",
+              "solution": "Area = 40 cm²",
+              "steps": [
+                "Formula: Area = length × width",
+                "Area = 8 × 5 = 40",
+                "Answer: 40 cm²"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "geo_s4",
+          "type": "PRACTICE",
+          "title": "Practice",
+          "questions": [
+            {
+              "id": "geo_q1",
+              "type": "NUMERIC",
+              "prompt": "What is the area of a rectangle 6 cm by 4 cm? (answer in cm², number only)",
+              "correctAnswer": "24",
+              "explanation": "Area = 6 × 4 = 24 cm²",
+              "hint": "Multiply length by width.",
+              "difficulty": 1
+            },
+            {
+              "id": "geo_q2",
+              "type": "NUMERIC",
+              "prompt": "A triangle has base 10 cm and height 6 cm. What is its area? (number only)",
+              "correctAnswer": "30",
+              "explanation": "Area = ½ × 10 × 6 = 30 cm²",
+              "hint": "Use ½ × base × height.",
+              "difficulty": 2
+            }
+          ]
+        },
+        {
+          "id": "geo_s5",
+          "type": "QUIZ",
+          "title": "Quick Check",
+          "questions": [
+            {
+              "id": "geo_q3",
+              "type": "NUMERIC",
+              "prompt": "What is the perimeter of a square with side 7 cm?",
+              "correctAnswer": "28",
+              "explanation": "Perimeter = 4 × 7 = 28 cm",
+              "hint": "A square has 4 equal sides.",
+              "difficulty": 1
+            },
+            {
+              "id": "geo_q4",
+              "type": "MULTIPLE_CHOICE",
+              "prompt": "How many degrees in a triangle's angles?",
+              "options": ["180", "90", "360", "270"],
+              "correctAnswer": "180",
+              "explanation": "The interior angles of any triangle sum to 180°.",
+              "hint": "This is a fundamental geometry fact.",
+              "difficulty": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

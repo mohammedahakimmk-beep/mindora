@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1093739822426",
+    "firebase_url": "https://mindora-b2550-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "mindora-b2550",
+    "storage_bucket": "mindora-b2550.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093739822426:android:15b56f676129bb22ca8763",
+        "android_client_info": {
+          "package_name": "com.mindora.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093739822426-g7lfdbhpdn2llv05c7pgacim9psr2ca4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mindora.app",
+            "certificate_hash": "93a46fbc42443fcb2a8ead2b1529d054e3d6724a"
+          }
+        },
+        {
+          "client_id": "1093739822426-8ce2tar74o4cs5ru6td71vd8siv2mlqt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbdL2djcsMQZOOq5C002Cm30mmIT1WptQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093739822426-8ce2tar74o4cs5ru6td71vd8siv2mlqt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

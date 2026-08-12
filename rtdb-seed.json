@@ -1,0 +1,14 @@
+{
+  "admins": {
+    "SEED_ON_FIRST_LOGIN": {
+      "email": "mohammed.ahakim.mk@gmail.com",
+      "role": "admin",
+      "note": "Auto-created when admin signs in via the app"
+    }
+  },
+  "users": {
+    "SEED_ON_FIRST_LOGIN": {
+      "note": "User profiles are created automatically on sign-up/sign-in"
+    }
+  }
+}

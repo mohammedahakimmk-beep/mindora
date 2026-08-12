@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="deep_teal">#FF0D4F4F</color>
+    <color name="teal_primary">#FF1A7A7A</color>
+    <color name="teal_light">#FF2BA8A8</color>
+    <color name="warm_sand">#FFF5E6D3</color>
+    <color name="sand_dark">#FFE8D4B8</color>
+    <color name="ember">#FFE85D04</color>
+    <color name="ember_light">#FFFF8C42</color>
+    <color name="night_sky">#FF0A1628</color>
+    <color name="star_gold">#FFFFD166</color>
+    <color name="constellation_line">#FF4ECDC4</color>
+    <color name="surface_dark">#FF122035</color>
+    <color name="error_red">#FFCF6679</color>
+    <color name="success_green">#FF4CAF50</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+</resources>

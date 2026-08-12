@@ -1,0 +1,8 @@
+{
+  "name": "mindora-star-guide",
+  "version": "1.0.0",
+  "description": "On-device tutor model pack for Mindora Star Guide",
+  "capabilities": ["hints", "explanations", "practice_generation", "chat", "difficulty_adjustment"],
+  "knowledge_domains": ["math"],
+  "offline": true
+}
