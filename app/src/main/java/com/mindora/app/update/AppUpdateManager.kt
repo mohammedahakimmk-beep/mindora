@@ -60,6 +60,8 @@ class AppUpdateManager(
             val body = conn.inputStream.bufferedReader().readText()
             val release = gson.fromJson(body, GitHubRelease::class.java) ?: return null
             val asset = release.assets.firstOrNull {
+                it.name.equals("Mindora.apk", ignoreCase = true)
+            } ?: release.assets.firstOrNull {
                 it.name.endsWith(".apk", ignoreCase = true)
             } ?: return null
             val code = parseVersionCode(release.tagName, release.name)

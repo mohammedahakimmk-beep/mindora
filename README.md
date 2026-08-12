@@ -11,11 +11,9 @@ Android learning app (Math first; Languages, Chess, Music ready to expand).
 - Firebase Auth (Email + Google) + Realtime Database
 - **Forced auto-update** from GitHub Releases / Firebase (no “Do you want to update?” prompt)
 
-## Build
-```bash
-./gradlew assembleDebug
-# APK: app/build/outputs/apk/debug/app-debug.apk
-```
+## Download (always latest)
+
+https://github.com/mohammedahakimmk-beep/mindora/releases/latest/download/Mindora.apk
 
 ## Auto-update
 On launch, Mindora checks:
