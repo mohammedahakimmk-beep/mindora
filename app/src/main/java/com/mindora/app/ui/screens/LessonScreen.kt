@@ -1,9 +1,6 @@
 package com.mindora.app.ui.screens
 
-import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,23 +13,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.media3.common.MediaItem
-import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.PlayerView
 import com.mindora.app.R
 import com.mindora.app.data.models.StageType
 import com.mindora.app.ui.components.ForgeButton
 import com.mindora.app.ui.components.ForgeOutlinedButton
+import com.mindora.app.ui.components.LessonVideoPlayer
 import com.mindora.app.ui.components.LoadingScreen
 import com.mindora.app.ui.components.MindoraTopBar
 import com.mindora.app.ui.components.QuestionCard
@@ -69,7 +60,7 @@ fun LessonScreen(
     }
 
     val stage = lesson.stages.getOrNull(state.currentStageIndex) ?: return
-    val progress = (state.currentStageIndex + 1f) / lesson.stages.size
+    val progress = (state.currentStageIndex + 1f) / lesson.stages.size.coerceAtLeast(1)
 
     Scaffold(
         topBar = { MindoraTopBar(lesson.title, onBack) },
@@ -91,7 +82,10 @@ fun LessonScreen(
                     StageType.VIDEO -> {
                         Text(stage.content, color = WarmSand, style = MaterialTheme.typography.bodyMedium)
                         Spacer(Modifier.height(12.dp))
-                        VideoPlayer(stage.videoUrl.ifBlank { lesson.videoUrl })
+                        LessonVideoPlayer(
+                            url = stage.videoUrl.ifBlank { lesson.videoUrl },
+                            title = stage.title.ifBlank { lesson.videoTitle }
+                        )
                     }
                     StageType.EXAMPLE -> {
                         stage.examples.forEach { ex ->
@@ -130,30 +124,4 @@ fun LessonScreen(
             }
         }
     }
-}
-
-@Composable
-fun VideoPlayer(url: String) {
-    val context = LocalContext.current
-    val exoPlayer = remember {
-        ExoPlayer.Builder(context).build().apply {
-            setMediaItem(MediaItem.fromUri(url))
-            prepare()
-        }
-    }
-    DisposableEffect(Unit) {
-        onDispose { exoPlayer.release() }
-    }
-    AndroidView(
-        factory = { ctx ->
-            PlayerView(ctx).apply {
-                player = exoPlayer
-                layoutParams = FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-            }
-        },
-        modifier = Modifier.fillMaxWidth().height(200.dp)
-    )
 }

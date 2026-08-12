@@ -18,3 +18,4 @@ keystore.properties
 mindora-release.jks
 google-services.json.bak
 /functions/node_modules/
+.kotlin/

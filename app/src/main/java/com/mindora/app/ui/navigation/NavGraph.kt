@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.mindora.app.ui.screens.AdminDashboardScreen
+import com.mindora.app.ui.screens.AiAboutScreen
 import com.mindora.app.ui.screens.AiTutorScreen
 import com.mindora.app.ui.screens.AssessmentScreen
 import com.mindora.app.ui.screens.AuthScreen
@@ -43,6 +44,7 @@ object Routes {
     const val ACHIEVEMENTS = "achievements"
     const val SETTINGS = "settings"
     const val NOTIFICATIONS = "notifications"
+    const val AI_ABOUT = "ai_about"
     const val ADMIN = "admin"
 
     fun learnPath(subjectId: String) = "learn_path/$subjectId"
@@ -144,6 +146,7 @@ fun MindoraNavGraph(appViewModel: AppViewModel = viewModel()) {
                 subjectId = subjectId,
                 energy = appState.energy,
                 energyCountdown = appState.energyCountdown,
+                learnerGrade = appState.profile?.grade,
                 onBack = { navController.popBackStack() },
                 onStartLesson = { topicId, lessonId ->
                     appViewModel.consumeEnergy(2) { success ->
@@ -234,8 +237,13 @@ fun MindoraNavGraph(appViewModel: AppViewModel = viewModel()) {
             SettingsScreen(
                 onBack = { navController.popBackStack() },
                 onNotifications = { navController.navigate(Routes.NOTIFICATIONS) },
-                onAiTutor = { navController.navigate(Routes.aiTutor()) }
+                onAiTutor = { navController.navigate(Routes.aiTutor()) },
+                onAiAbout = { navController.navigate(Routes.AI_ABOUT) }
             )
+        }
+
+        composable(Routes.AI_ABOUT) {
+            AiAboutScreen(onBack = { navController.popBackStack() })
         }
 
         composable(Routes.NOTIFICATIONS) {

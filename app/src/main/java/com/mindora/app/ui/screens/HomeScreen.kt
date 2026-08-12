@@ -63,8 +63,9 @@ fun HomeScreen(
     onNavigateToAdmin: () -> Unit,
     onNavigateToLearnPath: (String) -> Unit
 ) {
-    val subjects = runCatching { MindoraApp.instance.mathCurriculum.getAllSubjects() }.getOrDefault(emptyList())
-    val mathTopics = runCatching { MindoraApp.instance.mathCurriculum.getAllTopics() }.getOrDefault(emptyList())
+    val subjects = runCatching { MindoraApp.instance.mathCurriculum.getAllSubjects(profile?.grade) }.getOrDefault(emptyList())
+    val mathTopics = runCatching { MindoraApp.instance.mathCurriculum.getAllTopics(profile?.grade) }.getOrDefault(emptyList())
+    val lessonCount = runCatching { MindoraApp.instance.mathCurriculum.lessonCount(profile?.grade) }.getOrDefault(0)
 
     Scaffold(
         topBar = {
@@ -103,6 +104,11 @@ fun HomeScreen(
             }
             item {
                 Text("Your Constellation", style = MaterialTheme.typography.titleLarge, color = TealLight)
+                Text(
+                    "${profile?.grade ?: "All grades"} · $lessonCount lessons ready",
+                    color = WarmSand.copy(0.65f),
+                    style = MaterialTheme.typography.labelMedium
+                )
                 ConstellationMap(mathTopics, emptySet(), mathTopics.firstOrNull()?.id)
             }
             item {

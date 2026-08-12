@@ -10,6 +10,7 @@ import com.mindora.app.data.models.Question
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -119,9 +120,13 @@ class PlacementViewModel : ViewModel() {
     val uiState: StateFlow<PlacementUiState> = _uiState.asStateFlow()
 
     init {
-        val questions = runCatching { app.mathCurriculum.getPlacementQuestions() }
-            .getOrDefault(emptyList())
-        _uiState.update { it.copy(questions = questions) }
+        viewModelScope.launch {
+            val grade = runCatching { app.dataStore.userProfileFlow.first()?.grade }.getOrNull()
+            val questions = runCatching {
+                app.mathCurriculum.getPlacementQuestions(grade)
+            }.getOrDefault(emptyList())
+            _uiState.update { it.copy(questions = questions) }
+        }
     }
 
     fun answer(questionId: String, answer: String) {
@@ -153,9 +158,10 @@ class PlacementViewModel : ViewModel() {
                     if (app.aiEngine.checkAnswer(q, answer)) correct++
                 }
                 val score = if (state.questions.isNotEmpty()) (correct * 100) / state.questions.size else 50
+                val grade = runCatching { app.dataStore.userProfileFlow.first()?.grade }.getOrNull()
                 val topicIds = runCatching {
-                    app.mathCurriculum.buildLearningPath("medium", score)
-                }.getOrDefault(listOf("numbers_basics"))
+                    app.mathCurriculum.buildLearningPath("medium", score, grade)
+                }.getOrDefault(app.mathCurriculum.getAllTopics(grade).map { it.id })
                 val result = PlacementResult(
                     subjectId = "math",
                     score = score,

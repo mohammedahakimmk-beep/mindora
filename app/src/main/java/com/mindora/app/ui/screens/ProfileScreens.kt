@@ -146,7 +146,8 @@ fun AchievementCard(achievement: Achievement) {
 fun SettingsScreen(
     onBack: () -> Unit,
     onNotifications: () -> Unit,
-    onAiTutor: () -> Unit
+    onAiTutor: () -> Unit,
+    onAiAbout: () -> Unit = {}
 ) {
     Scaffold(
         topBar = { MindoraTopBar(stringResource(R.string.settings_title), onBack) },
@@ -155,9 +156,14 @@ fun SettingsScreen(
         Column(Modifier.fillMaxSize().padding(padding).padding(16.dp)) {
             SettingsItem("Notifications", onNotifications)
             SettingsItem("Star Guide AI", onAiTutor)
-            SettingsItem("About Mindora") {}
+            SettingsItem("How AI Works", onAiAbout)
+            SettingsItem("About Mindora", onAiAbout)
             Spacer(Modifier.height(16.dp))
-            Text("Version 1.0.0", color = WarmSand.copy(0.4f), style = MaterialTheme.typography.bodySmall)
+            Text(
+                "Version ${com.mindora.app.BuildConfig.VERSION_NAME}",
+                color = WarmSand.copy(0.4f),
+                style = MaterialTheme.typography.bodySmall
+            )
         }
     }
 }

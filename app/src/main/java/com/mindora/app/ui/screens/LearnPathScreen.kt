@@ -48,6 +48,7 @@ fun LearnPathScreen(
     subjectId: String,
     energy: EnergyState,
     energyCountdown: String,
+    learnerGrade: String? = null,
     onBack: () -> Unit,
     onStartLesson: (String, String) -> Unit,
     onStartPractice: (String) -> Unit,
@@ -56,18 +57,30 @@ fun LearnPathScreen(
     val app = MindoraApp.instance
     var path by remember { mutableStateOf<LearningPath?>(null) }
 
-    LaunchedEffect(subjectId) {
+    LaunchedEffect(subjectId, learnerGrade) {
+        val gradeTopics = app.mathCurriculum.getAllTopics(learnerGrade).map { it.id }
         path = app.progressRepository.getLearningPath(subjectId)
             ?: LearningPath(
                 subjectId = subjectId,
-                topicIds = app.mathCurriculum.getAllTopics().map { it.id }
+                topicIds = gradeTopics.ifEmpty { app.mathCurriculum.getAllTopics().map { it.id } }
             )
+        // If saved path has no topics for this grade, rebuild.
+        val current = path
+        if (current != null && current.topicIds.none { id -> gradeTopics.contains(id) } && gradeTopics.isNotEmpty()) {
+            val rebuilt = current.copy(topicIds = gradeTopics, currentTopicIndex = 0)
+            path = rebuilt
+            app.progressRepository.saveLearningPath(rebuilt)
+        }
     }
 
     val learningPath = path
-    val topics = learningPath?.topicIds?.mapNotNull { app.mathCurriculum.getTopic(it) } ?: emptyList()
+    val topics = learningPath?.topicIds?.mapNotNull { app.mathCurriculum.getTopic(it) }
+        ?.ifEmpty { app.mathCurriculum.getAllTopics(learnerGrade) }
+        ?: app.mathCurriculum.getAllTopics(learnerGrade)
     val completed = learningPath?.completedTopicIds?.toSet() ?: emptySet()
     val currentTopicId = learningPath?.topicIds?.getOrNull(learningPath.currentTopicIndex)
+        ?: topics.firstOrNull()?.id
+    val lessonCount = topics.sumOf { it.lessonIds.size }
 
     Scaffold(
         topBar = { MindoraTopBar("Forge Path", onBack, energy, energyCountdown) },
@@ -78,6 +91,12 @@ fun LearnPathScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             item {
+                Text(
+                    "Grade band: ${learnerGrade ?: "All"} · $lessonCount lessons across ${topics.size} topics",
+                    color = WarmSand.copy(0.7f),
+                    style = MaterialTheme.typography.labelLarge
+                )
+                Spacer(Modifier.height(8.dp))
                 Text("Your Constellation Map", style = MaterialTheme.typography.titleLarge, color = TealLight)
                 ConstellationMap(topics, completed, currentTopicId)
             }
