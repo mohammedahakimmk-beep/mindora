@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "1093739822426-snjotl8er21plhq2rneptpnbat6j6pp9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mindora.app",
+            "certificate_hash": "e623eec419b9e7f236557f7292373c217e0423b3"
+          }
+        },
+        {
           "client_id": "1093739822426-8ce2tar74o4cs5ru6td71vd8siv2mlqt.apps.googleusercontent.com",
           "client_type": 3
         }
