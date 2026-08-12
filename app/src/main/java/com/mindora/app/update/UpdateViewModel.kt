@@ -1,5 +1,6 @@
 package com.mindora.app.update
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mindora.app.MindoraApp
@@ -9,7 +10,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class UpdateViewModel : ViewModel() {
-    private val manager = MindoraApp.instance.updateManager
     private val _state = MutableStateFlow<UpdateUiState>(UpdateUiState.Idle)
     val state: StateFlow<UpdateUiState> = _state.asStateFlow()
 
@@ -17,15 +17,17 @@ class UpdateViewModel : ViewModel() {
         viewModelScope.launch {
             _state.value = UpdateUiState.Checking
             try {
+                val manager = MindoraApp.instance.updateManager
                 val release = manager.checkForUpdate()
                 if (release == null) {
                     _state.value = UpdateUiState.UpToDate
                     return@launch
                 }
                 _state.value = UpdateUiState.UpdateAvailable(release)
-                // No "Do you want to update?" — start download immediately.
                 startDownload(release)
             } catch (e: Exception) {
+                Log.e("UpdateViewModel", "Update check failed", e)
+                // Never block the app on update-check failures.
                 _state.value = UpdateUiState.Error(e.message ?: "Update check failed")
             }
         }
@@ -44,6 +46,7 @@ class UpdateViewModel : ViewModel() {
     private fun startDownload(release: AppReleaseInfo) {
         viewModelScope.launch {
             try {
+                val manager = MindoraApp.instance.updateManager
                 if (!manager.canRequestPackageInstalls()) {
                     manager.openUnknownSourcesSettings()
                     _state.value = UpdateUiState.Error(
@@ -60,6 +63,7 @@ class UpdateViewModel : ViewModel() {
                 _state.value = UpdateUiState.Installing(release)
                 manager.installApk(file)
             } catch (e: Exception) {
+                Log.e("UpdateViewModel", "Download/install failed", e)
                 _state.value = UpdateUiState.Error(e.message ?: "Download failed", release)
             }
         }

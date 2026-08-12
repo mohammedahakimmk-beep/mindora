@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.mindora.app.BuildConfig
+import com.mindora.app.MindoraApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -22,7 +23,7 @@ import java.net.URL
 
 class AppUpdateManager(
     private val context: Context,
-    private val database: FirebaseDatabase = FirebaseDatabase.getInstance(BuildConfig.RTDB_URL)
+    private val database: FirebaseDatabase = FirebaseDatabase.getInstance(MindoraApp.normalizedRtdbUrl())
 ) {
     private val gson = Gson()
 

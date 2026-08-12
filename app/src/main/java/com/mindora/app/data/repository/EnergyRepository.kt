@@ -3,6 +3,7 @@ package com.mindora.app.data.repository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.mindora.app.BuildConfig
+import com.mindora.app.MindoraApp
 import com.mindora.app.data.local.DataStoreManager
 import com.mindora.app.data.models.EnergyState
 import com.mindora.app.energy.EnergyManager
@@ -12,7 +13,7 @@ import kotlinx.coroutines.tasks.await
 
 class EnergyRepository(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
-    private val database: FirebaseDatabase = FirebaseDatabase.getInstance(BuildConfig.RTDB_URL),
+    private val database: FirebaseDatabase = FirebaseDatabase.getInstance(MindoraApp.normalizedRtdbUrl()),
     private val dataStore: DataStoreManager,
     private val energyManager: EnergyManager
 ) {

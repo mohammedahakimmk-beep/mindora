@@ -22,13 +22,13 @@ android {
         applicationId = "com.mindora.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 10000
-        versionName = "1.0.0"
+        versionCode = 10001
+        versionName = "1.0.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "WEB_CLIENT_ID", "\"1093739822426-8ce2tar74o4cs5ru6td71vd8siv2mlqt.apps.googleusercontent.com\"")
         buildConfigField("String", "ADMIN_EMAIL", "\"mohammed.ahakim.mk@gmail.com\"")
-        buildConfigField("String", "RTDB_URL", "\"https://mindora-b2550-default-rtdb.asia-southeast1.firebasedatabase.app\"")
+        buildConfigField("String", "RTDB_URL", "\"https://mindora-b2550-default-rtdb.asia-southeast1.firebasedatabase.app/\"")
         buildConfigField("String", "GITHUB_OWNER", "\"mohammedahakimmk-beep\"")
         buildConfigField("String", "GITHUB_REPO", "\"mindora\"")
     }

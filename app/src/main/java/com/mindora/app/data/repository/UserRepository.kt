@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import com.mindora.app.BuildConfig
+import com.mindora.app.MindoraApp
 import com.mindora.app.data.local.DataStoreManager
 import com.mindora.app.data.models.OnboardingData
 import com.mindora.app.data.models.UserProfile
@@ -15,7 +16,7 @@ import kotlinx.coroutines.tasks.await
 
 class UserRepository(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
-    private val database: FirebaseDatabase = FirebaseDatabase.getInstance(BuildConfig.RTDB_URL),
+    private val database: FirebaseDatabase = FirebaseDatabase.getInstance(MindoraApp.normalizedRtdbUrl()),
     private val dataStore: DataStoreManager,
     private val gson: Gson
 ) {
