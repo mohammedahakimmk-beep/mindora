@@ -10,6 +10,7 @@ import com.mindora.app.data.models.LearningPath
 import com.mindora.app.data.models.PlacementResult
 import com.mindora.app.data.models.TopicProgress
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -29,27 +30,62 @@ class ProgressRepository(
     suspend fun saveLearningPath(path: LearningPath) {
         dataStore.saveLearningPath(path)
         val userId = uid ?: return
-        database.reference.child("progress").child(userId).child("paths").child(path.subjectId)
-            .setValue(path).await()
+        runCatching {
+            val payload = hashMapOf<String, Any>(
+                "subjectId" to path.subjectId,
+                "topicIds" to ArrayList(path.topicIds),
+                "currentTopicIndex" to path.currentTopicIndex,
+                "completedTopicIds" to ArrayList(path.completedTopicIds),
+                "difficulty" to path.difficulty
+            )
+            database.reference.child("progress").child(userId).child("paths").child(path.subjectId)
+                .setValue(payload).await()
+        }
     }
 
     suspend fun getLearningPath(subjectId: String): LearningPath? {
-        val local = dataStore.learningPathFlow(subjectId)
-        val userId = uid ?: return null
-        return try {
-            val snapshot = database.reference.child("progress").child(userId)
-                .child("paths").child(subjectId).get().await()
-            snapshot.getValue(LearningPath::class.java)?.also { dataStore.saveLearningPath(it) }
-        } catch (_: Exception) {
-            null
+        val userId = uid
+        val remote = if (userId != null) {
+            runCatching {
+                val snapshot = database.reference.child("progress").child(userId)
+                    .child("paths").child(subjectId).get().await()
+                if (!snapshot.exists()) return@runCatching null
+                LearningPath(
+                    subjectId = snapshot.child("subjectId").getValue(String::class.java) ?: subjectId,
+                    topicIds = snapshot.child("topicIds").children.mapNotNull { it.getValue(String::class.java) },
+                    currentTopicIndex = snapshot.child("currentTopicIndex").getValue(Int::class.java)
+                        ?: snapshot.child("currentTopicIndex").getValue(Long::class.java)?.toInt() ?: 0,
+                    completedTopicIds = snapshot.child("completedTopicIds").children.mapNotNull {
+                        it.getValue(String::class.java)
+                    },
+                    difficulty = snapshot.child("difficulty").getValue(String::class.java) ?: "medium"
+                )
+            }.getOrNull()
+        } else null
+        if (remote != null) {
+            dataStore.saveLearningPath(remote)
+            return remote
         }
+        return runCatching {
+            dataStore.learningPathFlow(subjectId).first()
+        }.getOrNull()
     }
 
     suspend fun savePlacementResult(result: PlacementResult) {
         val userId = uid ?: return
-        database.reference.child("progress").child(userId).child("placement").child(result.subjectId)
-            .setValue(result).await()
-        database.reference.child("users").child(userId).child("placementComplete").setValue(true).await()
+        runCatching {
+            val payload = mapOf(
+                "subjectId" to result.subjectId,
+                "score" to result.score,
+                "totalQuestions" to result.totalQuestions,
+                "recommendedDifficulty" to result.recommendedDifficulty,
+                "recommendedTopicIds" to ArrayList(result.recommendedTopicIds),
+                "completedAt" to result.completedAt
+            )
+            database.reference.child("progress").child(userId).child("placement").child(result.subjectId)
+                .setValue(payload).await()
+            database.reference.child("users").child(userId).child("placementComplete").setValue(true).await()
+        }
     }
 
     suspend fun updateTopicProgress(topicId: String, progress: TopicProgress) {

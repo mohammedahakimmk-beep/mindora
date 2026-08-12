@@ -258,7 +258,12 @@ fun QuestionCard(
             when (question.type) {
                 com.mindora.app.data.models.QuestionType.MULTIPLE_CHOICE,
                 com.mindora.app.data.models.QuestionType.TRUE_FALSE -> {
-                    question.options.forEach { option ->
+                    val options = question.options.ifEmpty {
+                        if (question.type == com.mindora.app.data.models.QuestionType.TRUE_FALSE) {
+                            listOf("true", "false")
+                        } else emptyList()
+                    }
+                    options.forEach { option ->
                         val selected = selectedAnswer == option
                         OutlinedButton(
                             onClick = { onAnswer(option) },

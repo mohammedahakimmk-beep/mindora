@@ -90,9 +90,15 @@ class OnboardingViewModel : ViewModel() {
     fun complete(onDone: () -> Unit) {
         viewModelScope.launch {
             _uiState.update { it.copy(isSaving = true) }
-            val uid = app.authRepository.currentUser?.uid ?: return@launch
-            app.userRepository.completeOnboarding(uid, _uiState.value.data)
-            _uiState.update { it.copy(isSaving = false) }
+            try {
+                val uid = app.authRepository.currentUser?.uid
+                if (uid != null) {
+                    runCatching { app.userRepository.completeOnboarding(uid, _uiState.value.data) }
+                        .onFailure { e -> android.util.Log.e("OnboardingVM", "Save failed", e) }
+                }
+            } finally {
+                _uiState.update { it.copy(isSaving = false) }
+            }
             onDone()
         }
     }
@@ -113,7 +119,8 @@ class PlacementViewModel : ViewModel() {
     val uiState: StateFlow<PlacementUiState> = _uiState.asStateFlow()
 
     init {
-        val questions = app.mathCurriculum.getPlacementQuestions()
+        val questions = runCatching { app.mathCurriculum.getPlacementQuestions() }
+            .getOrDefault(emptyList())
         _uiState.update { it.copy(questions = questions) }
     }
 
@@ -138,35 +145,52 @@ class PlacementViewModel : ViewModel() {
     fun submit(onDone: () -> Unit) {
         viewModelScope.launch {
             _uiState.update { it.copy(isSubmitting = true) }
-            val state = _uiState.value
-            var correct = 0
-            state.questions.forEach { q ->
-                val answer = state.answers[q.id] ?: ""
-                if (app.aiEngine.checkAnswer(q, answer)) correct++
-            }
-            val score = if (state.questions.isNotEmpty()) (correct * 100) / state.questions.size else 0
-            val topicIds = app.mathCurriculum.buildLearningPath("medium", score)
-            val result = PlacementResult(
-                subjectId = "math",
-                score = score,
-                totalQuestions = state.questions.size,
-                recommendedDifficulty = when {
-                    score >= 80 -> "hard"
-                    score >= 50 -> "medium"
-                    else -> "easy"
-                },
-                recommendedTopicIds = topicIds
-            )
-            app.progressRepository.savePlacementResult(result)
-            app.progressRepository.saveLearningPath(
-                com.mindora.app.data.models.LearningPath(
+            try {
+                val state = _uiState.value
+                var correct = 0
+                state.questions.forEach { q ->
+                    val answer = state.answers[q.id] ?: ""
+                    if (app.aiEngine.checkAnswer(q, answer)) correct++
+                }
+                val score = if (state.questions.isNotEmpty()) (correct * 100) / state.questions.size else 50
+                val topicIds = runCatching {
+                    app.mathCurriculum.buildLearningPath("medium", score)
+                }.getOrDefault(listOf("numbers_basics"))
+                val result = PlacementResult(
                     subjectId = "math",
-                    topicIds = topicIds,
-                    difficulty = result.recommendedDifficulty
+                    score = score,
+                    totalQuestions = state.questions.size,
+                    recommendedDifficulty = when {
+                        score >= 80 -> "hard"
+                        score >= 50 -> "medium"
+                        else -> "easy"
+                    },
+                    recommendedTopicIds = topicIds,
+                    completedAt = System.currentTimeMillis()
                 )
-            )
-            app.progressRepository.unlockAchievement("placement_pro")
-            _uiState.update { it.copy(showResult = true, score = score, isSubmitting = false) }
+                runCatching { app.progressRepository.savePlacementResult(result) }
+                runCatching {
+                    app.progressRepository.saveLearningPath(
+                        com.mindora.app.data.models.LearningPath(
+                            subjectId = "math",
+                            topicIds = topicIds,
+                            difficulty = result.recommendedDifficulty
+                        )
+                    )
+                }
+                runCatching { app.progressRepository.unlockAchievement("placement_pro") }
+                // Keep local profile usable even if remote write fails.
+                runCatching {
+                    val uid = app.authRepository.currentUser?.uid ?: return@runCatching
+                    val profile = app.userRepository.getProfile(uid)
+                        ?: com.mindora.app.data.models.UserProfile(uid = uid)
+                    app.userRepository.updateProfile(profile.copy(placementComplete = true))
+                }
+                _uiState.update { it.copy(showResult = true, score = score, isSubmitting = false) }
+            } catch (e: Exception) {
+                android.util.Log.e("PlacementVM", "Submit failed", e)
+                _uiState.update { it.copy(showResult = true, score = 50, isSubmitting = false) }
+            }
         }
     }
 }

@@ -9,9 +9,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.mindora.app.ui.navigation.MindoraNavGraph
+import com.mindora.app.ui.components.VersionWatermark
 import com.mindora.app.ui.screens.ForceUpdateGate
 import com.mindora.app.ui.theme.MindoraTheme
 import com.mindora.app.ui.theme.NightSky
+import androidx.compose.foundation.layout.Box
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,8 +26,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = NightSky
                 ) {
-                    ForceUpdateGate {
-                        MindoraNavGraph()
+                    Box(Modifier.fillMaxSize()) {
+                        ForceUpdateGate {
+                            MindoraNavGraph()
+                        }
+                        VersionWatermark()
                     }
                 }
             }

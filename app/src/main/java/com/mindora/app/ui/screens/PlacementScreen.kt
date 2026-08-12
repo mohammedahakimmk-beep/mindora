@@ -3,8 +3,10 @@ package com.mindora.app.ui.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -30,7 +32,10 @@ import com.mindora.app.ui.viewmodel.PlacementViewModel
 fun PlacementScreen(onComplete: () -> Unit, viewModel: PlacementViewModel = viewModel()) {
     val state by viewModel.uiState.collectAsState()
 
-    if (state.isSubmitting) { LoadingScreen("Calculating your path…"); return }
+    if (state.isSubmitting) {
+        LoadingScreen("Calculating your path…")
+        return
+    }
 
     if (state.showResult) {
         Scaffold(topBar = { MindoraTopBar("Placement Complete") }, containerColor = NightSky) { padding ->
@@ -55,8 +60,21 @@ fun PlacementScreen(onComplete: () -> Unit, viewModel: PlacementViewModel = view
         return
     }
 
-    val question = state.questions.getOrNull(state.currentIndex) ?: return
-    val progress = if (state.questions.isNotEmpty()) (state.currentIndex + 1f) / state.questions.size else 0f
+    if (state.questions.isEmpty()) {
+        Scaffold(topBar = { MindoraTopBar("Constellation Placement") }, containerColor = NightSky) { padding ->
+            Column(Modifier.fillMaxSize().padding(padding).padding(24.dp)) {
+                Text("Couldn't load placement questions.", color = WarmSand)
+                Spacer(Modifier.height(16.dp))
+                ForgeButton("Continue to Home") {
+                    viewModel.submit(onComplete)
+                }
+            }
+        }
+        return
+    }
+
+    val question = state.questions[state.currentIndex]
+    val progress = (state.currentIndex + 1f) / state.questions.size
 
     Scaffold(
         topBar = { MindoraTopBar("Constellation Placement") },
@@ -67,7 +85,9 @@ fun PlacementScreen(onComplete: () -> Unit, viewModel: PlacementViewModel = view
             Spacer(Modifier.height(8.dp))
             LinearProgressIndicator(
                 progress = { progress },
-                modifier = Modifier.clip(androidx.compose.foundation.shape.RoundedCornerShape(4.dp)),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(4.dp)),
                 color = TealLight
             )
             Spacer(Modifier.height(24.dp))

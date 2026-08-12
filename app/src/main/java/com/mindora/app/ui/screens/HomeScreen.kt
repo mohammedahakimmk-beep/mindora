@@ -63,8 +63,8 @@ fun HomeScreen(
     onNavigateToAdmin: () -> Unit,
     onNavigateToLearnPath: (String) -> Unit
 ) {
-    val subjects = MindoraApp.instance.mathCurriculum.getAllSubjects()
-    val mathTopics = MindoraApp.instance.mathCurriculum.getAllTopics()
+    val subjects = runCatching { MindoraApp.instance.mathCurriculum.getAllSubjects() }.getOrDefault(emptyList())
+    val mathTopics = runCatching { MindoraApp.instance.mathCurriculum.getAllTopics() }.getOrDefault(emptyList())
 
     Scaffold(
         topBar = {
